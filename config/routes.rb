@@ -32,4 +32,8 @@ Rails.application.routes.draw do
     get 'show_booking', to: 'bookings#show_booking'       # Corrected route
     delete 'delete_booking', to: 'bookings#delete_booking' # Corrected route
   end
+
+  namespace :bx_block_location do
+    post 'create_location', to: 'locations#create_location'
+  end
 end

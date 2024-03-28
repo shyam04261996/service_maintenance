@@ -72,3 +72,7 @@ gem 'jsonapi-serializer'
 gem 'bcrypt', '~> 3.1.7'
 gem 'rack-cors', require: 'rack/cors'
 gem 'twilio-ruby'
+gem 'geocoder'
+gem "chartkick"
+gem 'bootstrap', '~> 5.0'
+gem 'chartjs-rails'
