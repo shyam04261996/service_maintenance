@@ -1,7 +1,7 @@
 ActiveAdmin.register BxBlockService::Service, as: "Service" do
   actions :all
 
-  permit_params :full_name, :start_time, :end_time, :address, :service_department, :status
+  permit_params :full_name, :start_time, :end_time, :address, :service_department, :status, :price
 
   form do |f|
     f.inputs "Service Details" do
@@ -10,6 +10,7 @@ ActiveAdmin.register BxBlockService::Service, as: "Service" do
       f.input :end_time
       f.input :address
       f.input :service_department
+      f.input :price
       f.input :status
     end
     f.actions
@@ -23,7 +24,8 @@ ActiveAdmin.register BxBlockService::Service, as: "Service" do
     column :start_time
     column :end_time
     column :address
-    column :description # This column might be causing the extra field in index view
+    column :description 
+    column :price
     column :status
     actions
   end

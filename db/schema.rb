@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_03_20_113234) do
+ActiveRecord::Schema.define(version: 2024_03_29_100931) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,9 +83,26 @@ ActiveRecord::Schema.define(version: 2024_03_20_113234) do
     t.string "pincode"
     t.string "client_account_id"
     t.string "status"
-    t.string "service_department"
     t.decimal "latitude", precision: 10, scale: 6
     t.decimal "longitude", precision: 10, scale: 6
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "service_department"
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.string "address"
+    t.string "city"
+    t.string "state"
+    t.string "country"
+    t.float "longitude"
+    t.float "latitude"
+    t.integer "employee_account_id"
+    t.integer "client_account_id"
+    t.string "description"
+    t.string "town"
+    t.integer "service_id"
+    t.string "postal_code"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -103,6 +120,7 @@ ActiveRecord::Schema.define(version: 2024_03_20_113234) do
     t.decimal "longitude", precision: 10, scale: 6
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.decimal "price"
   end
 
   create_table "users", force: :cascade do |t|

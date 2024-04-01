@@ -10,6 +10,7 @@ module BxBlockService
     :status, 
     :full_name, 
     :address, 
+    :price,
     :latitude, 
     :longitude, 
     :created_at, 
