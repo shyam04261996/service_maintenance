@@ -76,3 +76,5 @@ gem 'geocoder'
 gem "chartkick"
 gem 'bootstrap', '~> 5.0'
 gem 'chartjs-rails'
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
