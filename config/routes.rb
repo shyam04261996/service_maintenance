@@ -23,14 +23,16 @@ Rails.application.routes.draw do
     put 'update_service', to: 'services#update_service'
     get 'show_service', to: 'services#show_service'
     delete 'delete_service', to: 'services#delete_service'
+    put 'service_request', to: 'services#service_request'
   end
 
   namespace :bx_block_booking do
     get 'index_bookings', to: 'bookings#index_bookings'
     post 'create_booking', to: 'bookings#create_booking'
-    put 'update_booking', to: 'bookings#update_booking'  # Corrected route
-    get 'show_booking', to: 'bookings#show_booking'       # Corrected route
-    delete 'delete_booking', to: 'bookings#delete_booking' # Corrected route
+    put 'update_booking', to: 'bookings#update_booking'  
+    get 'show_booking', to: 'bookings#show_booking'       
+    delete 'delete_booking', to: 'bookings#delete_booking' 
+    put 'complete_service', to: 'bookings#complete_service'
   end
 
   namespace :bx_block_location do

@@ -42,11 +42,44 @@ module BxBlockService
       end
     end
 
+    # def service_request
+    #   @service = BxBlockService::Service.find(params[:service_id])
+    #   @booking = BxBlockBooking::Booking.find_by(id: params[:booking_id], service_id: @service.id)
+    #   if @service.present? && @booking.present?
+    #     if @booking.update(status: 'Confirmed')
+    #       render json: { message: 'Booking Confirmed successfully' }, status: :ok
+    #     else
+    #       render json: { error: 'Failed to update booking status', errors: @booking.errors }, status: :unprocessable_entity
+    #     end
+    #   else
+    #     render json: { error: 'Service not found or booking not associated with the service' }, status: :not_found
+    #   end
+    # end
+
+    def service_request
+      @service = BxBlockService::Service.find(params[:service_id])
+      @booking = BxBlockBooking::Booking.find_by(id: params[:booking_id], service_id: @service.id)
+      if @service.present? && @booking.present?
+        new_status = params[:status]
+        if valid_status?(new_status)
+          if @booking.update(status: new_status)
+            render json: { message: "Booking status updated to '#{new_status}' successfully" }, status: :ok
+          else
+            render json: { error: 'Failed to update booking status', errors: @booking.errors }, status: :unprocessable_entity
+          end
+        else
+          render json: { error: 'Invalid status provided' }, status: :unprocessable_entity
+        end
+      else
+        render json: { error: 'Service not found or booking not associated with the service' }, status: :not_found
+      end
+    end
+
     private
 
-    # def user
-    #   user = Account.find(current_user.id)
-    # end
+    def valid_status?(status)
+      ['Pending ','Confirmed' ,'Cancelled' ,'In_progress'].include?(status)
+    end
 
     def service_params
       params.require(:service).permit(:service_department, :description, :start_time, :end_time, :status, :full_name, :address, :account_id, :price)

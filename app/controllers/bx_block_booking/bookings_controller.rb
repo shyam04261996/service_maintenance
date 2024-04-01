@@ -8,7 +8,6 @@ module BxBlockBooking
       if @bookings.empty?
         return render json: { error: 'No bookings available' }, status: :not_found
       end
-
       serialized_bookings = @bookings.map do |booking|
         BxBlockBooking::BookingSerializer.new(booking).serializable_hash
       end
@@ -16,17 +15,31 @@ module BxBlockBooking
       render json: { bookings: serialized_bookings }, status: :ok
     end
 
+    # def create_booking
+    #   unless current_user.role == 'Client'
+    #     return render json: { error: 'You do not have access to create a booking' }, status: :unauthorized
+    #   end
+    #   @booking = Booking.new(booking_params.merge(client_account_id: current_user.id))
+    #   if @booking.save
+    #     render json: { booking: BxBlockBooking::BookingSerializer.new(@booking).serializable_hash, message: 'Booking created successfully' }, status: :created
+    #   else
+    #     render json: @booking.errors, status: :unprocessable_entity
+    #   end
+    # end
+
     def create_booking
       unless current_user.role == 'Client'
         return render json: { error: 'You do not have access to create a booking' }, status: :unauthorized
       end
-      @booking = Booking.new(booking_params.merge(client_account_id: current_user.id))
+      booking_params_with_default_status = booking_params.merge(status: 'Pending')
+      @booking = Booking.new(booking_params_with_default_status.merge(client_account_id: current_user.id))
       if @booking.save
         render json: { booking: BxBlockBooking::BookingSerializer.new(@booking).serializable_hash, message: 'Booking created successfully' }, status: :created
       else
         render json: @booking.errors, status: :unprocessable_entity
       end
     end
+
 
     def update_booking
       @booking = BxBlockBooking::Booking.find(params[:booking_id])
@@ -56,6 +69,22 @@ module BxBlockBooking
       end
     end
 
+    def complete_service
+      @service = BxBlockService::Service.find(params[:service_id])
+      @booking = BxBlockBooking::Booking.find_by(id: params[:booking_id], service_id: @service.id)
+      if @service.present? && @booking.present?
+        if current_user.role != 'Client'
+          return render json: { error: 'You do not have permission to complete this booking' }, status: :unauthorized
+        end
+        if @booking.update(status: 'Complete')
+          render json: { message: "Booking status updated to 'Complete' successfully" }, status: :ok
+        else
+          render json: { error: 'Failed to update booking status', errors: @booking.errors }, status: :unprocessable_entity
+        end
+      else
+        render json: { error: 'Service not found or booking not associated with the service' }, status: :not_found
+      end
+    end
 
     private
 
