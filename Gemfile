@@ -79,3 +79,5 @@ gem 'chartjs-rails'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 gem 'jquery-rails'
+gem 'bootstrap', '~> 5.0'
+

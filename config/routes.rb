@@ -39,4 +39,9 @@ Rails.application.routes.draw do
   namespace :bx_block_location do
     post 'create_location', to: 'locations#create_location'
   end
+
+  namespace :bx_block_invoice do
+   get 'invoices', to: 'invoices#index'
+  end
+
 end
