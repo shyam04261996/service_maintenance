@@ -8,6 +8,9 @@ module BxBlockBooking
                :status, 
                :service_department, 
                :service_id,
+               :price,
+               :discount_amount,
+               :total_amount,
                :created_at, 
                :updated_at
               ]

@@ -82,7 +82,7 @@ module BxBlockService
     end
 
     def service_params
-      params.require(:service).permit(:service_department, :description, :start_time, :end_time, :status, :full_name, :address, :account_id, :price)
+      params.require(:service).permit(:service_department, :description, :start_time, :end_time, :status, :full_name, :address, :account_id, :price, :discount_percentage)
     end
   end
 end

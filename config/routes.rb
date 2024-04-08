@@ -33,6 +33,7 @@ Rails.application.routes.draw do
     get 'show_booking', to: 'bookings#show_booking'       
     delete 'delete_booking', to: 'bookings#delete_booking' 
     put 'complete_service', to: 'bookings#complete_service'
+    # get 'bookings/:id/invoice', to: 'bookings#invoice', as: 'booking_invoice'
   end
 
   namespace :bx_block_location do

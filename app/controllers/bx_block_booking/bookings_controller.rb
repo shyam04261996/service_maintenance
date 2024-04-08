@@ -76,8 +76,16 @@ module BxBlockBooking
         if current_user.role != 'Client'
           return render json: { error: 'You do not have permission to complete this booking' }, status: :unauthorized
         end
-        if @booking.update(status: 'Complete')
-          render json: { message: "Booking status updated to 'Complete' successfully" }, status: :ok
+        # discount_percentage = 15
+        @discount_percentage = @service.discount_percentage
+        discounted_price = @service.price * @discount_percentage / 100
+        if @booking.update(status: 'Complete', price: @service.price, discount_amount: discounted_price, total_amount: (@service.price - discounted_price))
+          render json: { 
+            booking: BxBlockBooking::BookingSerializer.new(@booking).serializable_hash, 
+            service: BxBlockService::ServiceSerializer.new(@service).serializable_hash, 
+            message: "Booking status updated to 'Complete' successfully with a #{@service.discount_percentage} discount", 
+            discounted_price: discounted_price 
+          }, status: :ok
         else
           render json: { error: 'Failed to update booking status', errors: @booking.errors }, status: :unprocessable_entity
         end
