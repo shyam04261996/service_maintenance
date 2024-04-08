@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Invoice</title>
+  <style>
+    /* Add your CSS styles here */
+  </style>
+</head>
+<body>
+  <h1>Invoice</h1>
+  <p>Booking ID: <%= @booking.id %></p>
+  <p>Full Name: <%= @booking.full_name %></p>
+  <!-- Add more booking details as needed -->
+</body>
+</html>
