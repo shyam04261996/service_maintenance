@@ -11,6 +11,7 @@ module BxBlockService
     :full_name, 
     :address, 
     :price,
+    :discount_percentage,
     :latitude, 
     :longitude, 
     :created_at, 
