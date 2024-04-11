@@ -80,4 +80,16 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 gem 'jquery-rails'
 gem 'bootstrap', '~> 5.0'
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+end
+
+group :test do
+  gem 'database_cleaner'
+end
+gem "image_processing", ">= 1.2"
+gem 'ckeditor', github: 'galetahub/ckeditor'
+
+
 
