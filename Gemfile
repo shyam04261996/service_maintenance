@@ -90,6 +90,12 @@ group :test do
 end
 gem "image_processing", ">= 1.2"
 gem 'ckeditor', github: 'galetahub/ckeditor'
+gem 'faker'
+gem 'simplecov', require: false
+gem 'simplecov-json', '~> 0.2'
+gem 'rspec-sonarqube-formatter', '~> 1.5'
+
+
 
 
 

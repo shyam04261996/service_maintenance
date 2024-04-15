@@ -6,9 +6,9 @@ Rails.application.routes.draw do
   namespace :account_block do
     resources :accounts, only: [:create, :show, :update, :destroy]
     post 'create_account', to: 'accounts#create_account'
-    put 'update_account/:id', to: 'accounts#update_account' # Include ':id' placeholder for update
-    get 'show_account/:id', to: 'accounts#show_account'     # Include ':id' placeholder for show
-    delete 'destroy_account/:id', to: 'accounts#destroy_account' # Include ':id' placeholder for destroy
+    put 'update_account', to: 'accounts#update_account' 
+    get 'show_account/:id', to: 'accounts#show_account'    
+    delete 'destroy_account/:id', to: 'accounts#destroy_account'
   end
   
 
