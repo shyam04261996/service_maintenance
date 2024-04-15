@@ -1,0 +1,2 @@
+module TermAndConditionsHelper
+end

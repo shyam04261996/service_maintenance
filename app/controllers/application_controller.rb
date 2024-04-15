@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::Base
   include JwtHelper
+  include ActionController::MimeResponds
+
   protect_from_forgery with: :null_session, if: -> { request.format.json? }
   def authenticate_user
     token = request.headers['token']&.split(' ')&.last

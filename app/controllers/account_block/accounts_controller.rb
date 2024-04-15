@@ -29,17 +29,11 @@ module AccountBlock
 
     def update_account
       @account = AccountBlock::Account.find(params[:id])
-      if current_user.admin? || current_user == @account
-        if @account.update(role: params[:role])
-          render json: AccountBlock::AccountSerializer.new(@account).serializable_hash, status: :ok
-        else
-          render json: { errors: @account.errors.full_messages }, status: :unprocessable_entity
-        end
+      if @account.update(account_params)
+        render json: AccountBlock::AccountSerializer.new(@account).serializable_hash, status: :ok
       else
-        render json: { error: 'Unauthorized' }, status: :unauthorized
+        render json: { errors: @account.errors.full_messages }, status: :unprocessable_entity
       end
-    rescue ActiveRecord::RecordNotFound
-      render json: { error: 'Account not found' }, status: :not_found
     end
 
     private

@@ -15,18 +15,6 @@ module BxBlockBooking
       render json: { bookings: serialized_bookings }, status: :ok
     end
 
-    # def create_booking
-    #   unless current_user.role == 'Client'
-    #     return render json: { error: 'You do not have access to create a booking' }, status: :unauthorized
-    #   end
-    #   @booking = Booking.new(booking_params.merge(client_account_id: current_user.id))
-    #   if @booking.save
-    #     render json: { booking: BxBlockBooking::BookingSerializer.new(@booking).serializable_hash, message: 'Booking created successfully' }, status: :created
-    #   else
-    #     render json: @booking.errors, status: :unprocessable_entity
-    #   end
-    # end
-
     def create_booking
       unless current_user.role == 'Client'
         return render json: { error: 'You do not have access to create a booking' }, status: :unauthorized
@@ -69,17 +57,46 @@ module BxBlockBooking
       end
     end
 
+    # def complete_service
+    #   @service = BxBlockService::Service.find(params[:service_id])
+    #   @booking = BxBlockBooking::Booking.find_by(id: params[:booking_id], service_id: @service.id)
+    #   if @service.present? && @booking.present?
+    #     if current_user.role != 'Client'
+    #       return render json: { error: 'You do not have permission to complete this booking' }, status: :unauthorized
+    #     end
+    #     # discount_percentage = 15
+    #     @discount_percentage = @service.discount_percentage
+    #     discounted_price = @service.price * @discount_percentage / 100
+    #     if @booking.update(status: 'Complete', price: @service.price, discount_amount: discounted_price, total_amount: (@service.price - discounted_price))
+    #       render json: { 
+    #         booking: BxBlockBooking::BookingSerializer.new(@booking).serializable_hash, 
+    #         service: BxBlockService::ServiceSerializer.new(@service).serializable_hash, 
+    #         message: "Booking status updated to 'Complete' successfully with a #{@service.discount_percentage} discount", 
+    #         discounted_price: discounted_price 
+    #       }, status: :ok
+    #     else
+    #       render json: { error: 'Failed to update booking status', errors: @booking.errors }, status: :unprocessable_entity
+    #     end
+    #   else
+    #     render json: { error: 'Service not found or booking not associated with the service' }, status: :not_found
+    #   end
+    # end
     def complete_service
       @service = BxBlockService::Service.find(params[:service_id])
       @booking = BxBlockBooking::Booking.find_by(id: params[:booking_id], service_id: @service.id)
+      
       if @service.present? && @booking.present?
         if current_user.role != 'Client'
           return render json: { error: 'You do not have permission to complete this booking' }, status: :unauthorized
         end
-        # discount_percentage = 15
+        
         @discount_percentage = @service.discount_percentage
         discounted_price = @service.price * @discount_percentage / 100
+        
         if @booking.update(status: 'Complete', price: @service.price, discount_amount: discounted_price, total_amount: (@service.price - discounted_price))
+          # Generate PDF invoice
+          generate_invoice_pdf(@booking)
+          
           render json: { 
             booking: BxBlockBooking::BookingSerializer.new(@booking).serializable_hash, 
             service: BxBlockService::ServiceSerializer.new(@service).serializable_hash, 
@@ -94,7 +111,25 @@ module BxBlockBooking
       end
     end
 
+
     private
+
+
+    def generate_invoice_pdf(booking)
+      invoice_data = {
+        booking_id: booking.id,
+        client_name: booking.client.name,
+        # Add more invoice data as needed
+      }
+        pdf = WickedPdf.new.pdf_from_string(render_to_string(
+        template: 'invoices/invoice_template.html.erb',
+        layout: 'layouts/pdf_layout.html.erb',
+        locals: { invoice_data: invoice_data }
+      ))
+      pdf_file_path = Rails.root.join('tmp', "invoice_#{booking.id}.pdf")
+      File.open(pdf_file_path, 'wb') do |file|
+        file << pdf
+      end
 
     def booking_params
       params.require(:booking).permit(:full_name, :mobile_number, :start_time, :end_time, :address, :service_department, :status, :description, :service_id)
