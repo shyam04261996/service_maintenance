@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :accounts, class: 'AccountBlock::Account' do
-    first_name { "arvind" }
+    first_name { "dummy" }
     last_name { "test" }
     email { Faker::Internet.email }
     role {"Employee"}
