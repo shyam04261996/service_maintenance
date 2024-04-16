@@ -9,6 +9,6 @@ FactoryBot.define do
     status { "un_assigned" }
     full_name { "Komal singh" }
     address { "Indore Vijay Nagar" }
-    account_id { 1 } 
+    account_id { FactoryBot.create(:accounts).id }
   end
 end

@@ -2,17 +2,16 @@
 module BxBlockService
   class ServicesController < ApplicationController
     before_action :authenticate_user
-    before_action :set_service, only: [:show, :update, :destroy]
+    before_action :find_account, only: [:update_service, :show_service, :delete_service, :service_request]
 
     def create_service
      @service = Service.new(service_params.merge(account_id: current_user.id))
-      if @service.save
-        render json: { service: BxBlockService::ServiceSerializer.new(@service).serializable_hash, message: 'Service created successfully' }, status: :created
-     else
-        render json: @service.errors, status: :unprocessable_entity
-     end
+        if @service.save
+          render json: { service: BxBlockService::ServiceSerializer.new(@service).serializable_hash, message: 'Service created successfully' }, status: :created
+       else
+          render json: @service.errors, status: :unprocessable_entity
+       end
     end
-
 
     def update_service
       @service = BxBlockService::Service.find(params[:id])
@@ -83,6 +82,14 @@ module BxBlockService
 
     def service_params
       params.require(:service).permit(:service_department, :description, :start_time, :end_time, :status, :full_name, :address, :account_id, :price, :discount_percentage)
+    end
+
+    def find_account
+      @user = AccountBlock::Account.find(params[:id])
+      rescue ActiveRecord::RecordNotFound => e
+        return render json: {errors: [
+          {error: t('patient_not_found') },
+        ]}, status: :unprocessable_entity
     end
   end
 end
