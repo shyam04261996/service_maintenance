@@ -24,6 +24,7 @@ Rails.application.routes.draw do
     get 'show_service', to: 'services#show_service'
     delete 'delete_service', to: 'services#delete_service'
     put 'service_request', to: 'services#service_request'
+    get 'listing_service', to: 'services#listing_service'
   end
 
   namespace :bx_block_booking do
@@ -40,8 +41,10 @@ Rails.application.routes.draw do
     post 'create_location', to: 'locations#create_location'
   end
 
-  namespace :bx_block_invoice do
-   get 'invoices', to: 'invoices#index'
+  namespace :bx_block_availability do
+   post 'create_availability', to: 'availabilitys#create_availability'
+   put 'update_availability', to: 'availabilitys#update_availability'
+   delete 'delete_availability', to: 'availabilitys#delete_availability'
+   get 'show_availability', to: 'availabilitys#show_availability'
   end
-
 end
