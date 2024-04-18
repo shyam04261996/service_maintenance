@@ -14,7 +14,6 @@ module BxBlockAvailability
 
     def update_availability
       @availability = BxBlockAvailability::Availability.find_by(account_id: @current_user.id)
-      
       if @availability.nil?
         render json: { errors: 'Availability record not found' }, status: :not_found
       elsif @availability.update(availability_params)
@@ -25,18 +24,13 @@ module BxBlockAvailability
     end
 
     def delete_availability
-      begin
-        @availability = BxBlockAvailability::Availability.find(params[:availability_id])
-        if @availability.destroy
-          render json: { message: 'Deleted successfully' }, status: :ok
-        else
-          render json: { message: 'Unable to delete' }, status: :unprocessable_entity
-        end
-      rescue ActiveRecord::RecordNotFound
-        render json: { message: 'Availability not found' }, status: :not_found
+      @availability = BxBlockAvailability::Availability.find(params[:availability_id])
+      if @availability.destroy
+        render json: { message: 'Deleted successfully' }, status: :ok
       end
+    rescue ActiveRecord::RecordNotFound
+      render json: { message: 'Availability not found' }, status: :not_found
     end
-
 
     def show_availability
       begin

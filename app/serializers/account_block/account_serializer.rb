@@ -12,6 +12,8 @@ module AccountBlock
                :user_type, 
                :role,
                :otp,
+               :start_time,
+               :end_time,
                :created_at, 
                :updated_at
               ]

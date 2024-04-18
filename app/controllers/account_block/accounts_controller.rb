@@ -10,8 +10,7 @@ module AccountBlock
         render json: { errors: @account.errors.full_messages }, status: :unprocessable_entity
       end
     end
-
-
+    
     def show_account
       @account = AccountBlock::Account.find(params[:id])
       render json: AccountBlock::AccountSerializer.new(@account).serializable_hash, status: :ok
@@ -39,7 +38,7 @@ module AccountBlock
     private
 
     def account_params
-      params.require(:account).permit(:first_name, :last_name, :full_phone_number, :email, :password, :role)
+      params.require(:account).permit(:first_name, :last_name, :full_phone_number, :email, :password, :role , :start_time, :end_time)
     end
  end
 end

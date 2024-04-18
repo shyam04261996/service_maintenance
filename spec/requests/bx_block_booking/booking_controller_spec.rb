@@ -7,7 +7,7 @@ RSpec.describe BxBlockBooking::BookingsController, type: :controller do
     @employee = FactoryBot.create(:accounts, role: "Employee")      
     payload = { user_id: @client.id }
     @user_token = JsonWebToken.encode(payload)
-    # request.headers['token'] = @user_token
+    request.headers['token'] = @user_token
     @service = FactoryBot.create(:service, account_id: @employee.id)
     @booking = FactoryBot.create(:booking, client_account_id: @client.id, service_id:@service.id)
   end
