@@ -1,4 +1,3 @@
-# app/models/account_block/account.rb
 require 'phonelib'
 module AccountBlock
  class Account < ApplicationRecord
@@ -13,6 +12,7 @@ module AccountBlock
     has_many :services, class_name: 'BxBlockService::Service', foreign_key: 'account_id', dependent: :destroy
     has_many :bookings, class_name: 'BxBlockBooking::Booking', foreign_key: 'client_account_id',  dependent: :destroy
     # has_many :locations, class_name: 'BxBlockLocation::Location', foreign_key: 'account_id', dependent: :destroy
+    has_many :availabilities, class_name: 'BxBlockAvailability::Availability', foreign_key: 'account_id', dependent: :destroy
 
 
     private

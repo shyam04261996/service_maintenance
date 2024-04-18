@@ -11,6 +11,10 @@ ActiveAdmin.register BxBlockBooking::Booking, as: "Booking" do
     column :description
     column :mobile_number
     column :status
+    column :price
+    column :discount_amount
+    column :total_amount
+    column :status
     actions
   end
 

@@ -27,4 +27,26 @@ ActiveAdmin.register AccountBlock::Account, as: "Account" do
     end
     f.actions
   end
+
+  show do
+    attributes_table do
+      row :id
+      row :first_name
+      row :last_name
+      row :email
+      row :full_phone_number
+      row :role
+      # Add more rows for other attributes as needed
+    end
+
+    panel "Availability" do
+      table_for account.availabilities do
+        column :id
+        column :start_time
+        column :end_time
+        column :remark
+        column :description
+      end
+    end
+  end
 end
