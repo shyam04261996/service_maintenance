@@ -6,11 +6,10 @@ RSpec.describe BxBlockAvailability::AvailabilitysController, type: :controller d
     payload = { user_id: @employee.id }
     @user_token = JsonWebToken.encode(payload)
     request.headers['token'] = "#{@user_token}"
-    @availability = FactoryBot.create(:availability, account_id: @employee.id)
-    
+    @availability = FactoryBot.create(:availability, account_id: @employee.id)    
     @employee2 = FactoryBot.create(:accounts, role: "Employee")
     @availability2 = FactoryBot.create(:availability)
-	payload2 = { user_id: @employee2.id }
+	  payload2 = { user_id: @employee2.id }
     @user_token2 = JsonWebToken.encode(payload2)
   end
 

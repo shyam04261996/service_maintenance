@@ -18,7 +18,7 @@ module BxBlockBooking
     end
 
     def update_booking
-      @booking = BxBlockBooking::Booking.find_by(id: params[:booking_id], client_account_id: @current_user.id)      
+      @booking = BxBlockBooking::Booking.find_by(client_account_id: @current_user.id)      
       if @booking.nil?
         render json: { error: 'Booking not found or you do not have permission to update this booking' }, status: :not_found
       elsif @booking.update(booking_params)
@@ -51,7 +51,7 @@ module BxBlockBooking
       if @bookings.present?
         render json: { bookings: @bookings.map { |book| BxBlockBooking::BookingSerializer.new(book).serializable_hash } }, status: :ok
       else
-        render json: { meta: { message: "No bookings found for the current user" } }, status: :ok
+        render json: { meta: { message: "No bookings found for the current user" } }, status: :not_found
       end
     end
 

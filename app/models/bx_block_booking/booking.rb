@@ -8,6 +8,7 @@ module BxBlockBooking
     validates :status, inclusion: { in: %w(Pending Confirmed Cancelled In_progress Complete) }
 
     after_commit :price_calculation, on: :create
+    validates :mobile_number, presence: true
 
     private
 
