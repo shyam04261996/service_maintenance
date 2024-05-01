@@ -10,6 +10,12 @@ ActiveAdmin.register BxBlockLocation::Location, as: "Location" do
     column :state
     column :country
     column :pincode
+    column "Employee & Client Name" do |location|
+      location.employee_account.first_name if location.employee_account
+    end
+    column "Role" do |location|
+      location.employee_account.role if location.employee_account
+    end
     actions
   end
 

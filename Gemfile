@@ -95,6 +95,7 @@ gem 'faker'
 gem 'simplecov', require: false
 gem 'simplecov-json', '~> 0.2'
 gem 'rspec-sonarqube-formatter', '~> 1.5'
+gem 'sumsub-ruby-sdk', '~> 0.1.3', require: 'sumsub'
 
 
 
