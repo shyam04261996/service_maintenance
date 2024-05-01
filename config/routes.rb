@@ -39,6 +39,10 @@ Rails.application.routes.draw do
 
   namespace :bx_block_location do
     post 'create_location', to: 'locations#create_location'
+    put 'update_location', to: 'locations#update_location'
+    delete 'delete_location', to: 'locations#delete_location'
+    get 'show_location', to: 'locations#show_location'
+    get 'index_locations',to: 'locations#index_locations'
   end
 
   namespace :bx_block_availability do

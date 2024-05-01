@@ -11,7 +11,10 @@ module AccountBlock
     
     has_many :services, class_name: 'BxBlockService::Service', foreign_key: 'account_id', dependent: :destroy
     has_many :bookings, class_name: 'BxBlockBooking::Booking', foreign_key: 'client_account_id',  dependent: :destroy
-    # has_many :locations, class_name: 'BxBlockLocation::Location', foreign_key: 'account_id', dependent: :destroy
+
+    has_many :employee_locations, class_name: 'BxBlockLocation::Location', foreign_key: 'employee_account_id'
+    has_many :client_locations, class_name: 'BxBlockLocation::Location', foreign_key: 'client_account_id'
+
     has_many :availabilities, class_name: 'BxBlockAvailability::Availability', foreign_key: 'account_id', dependent: :destroy
 
 
