@@ -3,7 +3,6 @@ module BxBlockService
     self.table_name = :services
     belongs_to :account, class_name: 'AccountBlock::Account', foreign_key: 'account_id'
     has_many :bookings, class_name: 'BxBlockBooking::Booking', foreign_key: 'service_id'
-    # before_save :set_price
     validates :service_department, presence: true
 
 

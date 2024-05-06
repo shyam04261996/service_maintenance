@@ -11,7 +11,6 @@ Rails.application.routes.draw do
     delete 'destroy_account/:id', to: 'accounts#destroy_account'
   end
   
-
   namespace :bx_block_login do 
     post 'login', to: 'logins#login'
     delete '/logout', to: 'logins#destroy'
@@ -51,4 +50,16 @@ Rails.application.routes.draw do
    delete 'delete_availability', to: 'availabilitys#delete_availability'
    get 'show_availability', to: 'availabilitys#show_availability'
   end
+
+  namespace :bx_block_contact_us do
+    post 'create', to: 'contact_us#create'
+    put 'update', to: 'contact_us#update'
+    delete 'delete', to: 'contact_us#delete'
+    get 'index', to: 'contact_us#index'
+  end
+
+  namespace :bx_block_invoice do
+    get 'index', to: 'invoices#index'
+  end
+
 end

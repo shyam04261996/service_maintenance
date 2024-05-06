@@ -9,9 +9,9 @@ ActiveAdmin.register BxBlockService::Service, as: "Service" do
       f.input :start_time
       f.input :end_time
       f.input :address
-      f.input :service_department
+      f.input :service_department, as: :select, collection: BxBlockService::Service.service_departments.keys.map { |key| [BxBlockService::Service.human_attribute_name("service_department.#{key}"), key] }
       f.input :price
-      f.input :status
+      f.input :status, as: :select, collection: ['Pending', 'Confirmed', 'Cancelled', 'In Progress', 'Completed']
     end
     f.actions
   end
@@ -20,7 +20,9 @@ ActiveAdmin.register BxBlockService::Service, as: "Service" do
     selectable_column
     id_column
     column :full_name
-    column :service_department
+    column :service_department do |service|
+      BxBlockService::Service.human_attribute_name("service_department.#{service.service_department}")
+    end
     column :start_time
     column :end_time
     column :address

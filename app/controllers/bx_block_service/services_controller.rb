@@ -78,7 +78,7 @@ module BxBlockService
     private
 
     def valid_status?(status)
-      ['Pending ','Confirmed' ,'Cancelled' ,'In_progress'].include?(status)
+      ['Pending ','Confirmed' ,'Cancelled' ,'In_progress', 'Completed'].include?(status)
     end
 
     def service_params
